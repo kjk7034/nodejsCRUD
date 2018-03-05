@@ -42,16 +42,20 @@ app.get("/wise", (request, response) => {
     })
 })
 
-// PUT
-app.put("/wise", (request, response) => {
+// UPDATE
+app.patch("/wise", (request, response) => {
     fs.readFile(dbPath, { encoding: 'utf-8' }, (err, data) => {
         if (!err) {
             const database = JSON.parse(data)
-            database.datas[request.query.idx] = JSON.stringify(request.body)
-            fs.writeFile(dbPath, JSON.stringify(database), (err) => {
-                if (err) throw err;
-                console.log('The file has been saved!');
-            });
+            if (database.datas[request.query.idx]) {
+                database.datas[request.query.idx] = JSON.stringify(request.body)
+                fs.writeFile(dbPath, JSON.stringify(database), (err) => {
+                    if (err) throw err;
+                    console.log('The file has been saved!');
+                });
+            } else {
+                response.send("Not update");
+            }
             response.end();
         } else {
             console.log(err);
