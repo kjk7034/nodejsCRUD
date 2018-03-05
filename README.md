@@ -200,15 +200,19 @@ undefined
 
 // index.js 코드 중
 ```
-app.put("/wise", (request, response) => {
+app.patch("/wise", (request, response) => {
     fs.readFile(dbPath, { encoding: 'utf-8' }, (err, data) => {
         if (!err) {
             const database = JSON.parse(data)
-            database.datas[request.query.idx] = JSON.stringify(request.body)
-            fs.writeFile(dbPath, JSON.stringify(database), (err) => {
-                if (err) throw err;
-                console.log('The file has been saved!');
-            });
+            if (database.datas[request.query.idx]) {
+                database.datas[request.query.idx] = JSON.stringify(request.body)
+                fs.writeFile(dbPath, JSON.stringify(database), (err) => {
+                    if (err) throw err;
+                    console.log('The file has been saved!');
+                });
+            } else {
+                response.send("Not update");
+            }
             response.end();
         } else {
             console.log(err);
@@ -223,6 +227,8 @@ http://localhost:3000/wise?idx=2 (Put) {"name" : "WisePut"}
 ```
 // http://localhost:3000/wise?idx=2
 {"name":"WisePut"}
+// http://localhost:3000/wise?idx=4
+"Not update"
 ```
 
 ### Delete
