@@ -1,4 +1,4 @@
-이 글은 블로그에 작성한 글을 그대로 가져왔습니다.
+이 글은 [블로그](http://wagunblog.com/wp/?p=2511)에 작성한 글을 그대로 가져왔습니다.
 
 # express를 이용한 간단한 CRUD
 
@@ -217,7 +217,7 @@ app.put("/wise", (request, response) => {
 })
 ```
 
-http://localhost:3000/wise?idx=2에 {"name" : "WisePut"}을 Put.
+http://localhost:3000/wise?idx=2 (Put) {"name" : "WisePut"}
 
 // 접근 경로에 따른 결과값
 ```
